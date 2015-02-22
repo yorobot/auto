@@ -1,0 +1,117 @@
+#############################
+# Build a new world.db
+
+# stdlibs
+
+require 'pp'
+
+## $DEBUG = true
+$RUBYLIBS_DEBUG = true
+
+
+# 3rd party libs/gems
+
+require 'logutils'
+require 'logutils/activerecord'
+require 'worlddb'
+
+
+# our own code
+
+##
+# output settings
+
+
+BUILD_DIR     = "./build"
+DOWNLOAD_DIR  = "./build/dl"
+
+WORLD_DATASET_URL = "https://github.com/openmundi/world.db/archive/master.zip"
+WORLD_ZIP_NAME = 'world.db'
+WORLD_ZIP_PATH = "#{DOWNLOAD_DIR}/#{WORLD_ZIP_NAME}.zip"
+
+WORLD_BOOK_URL      = "https://github.com/book-templates/world/archive/master.zip"
+WORLD_BOOK_ZIP_PATH = "#{DOWNLOAD_DIR}/world-book.zip"
+
+
+WORLD_DB_PATH = "#{BUILD_DIR}/world.db"
+
+DB_CONFIG = {
+  adapter:  'sqlite3',
+  database:  WORLD_DB_PATH    ## convert to absolute path ??
+}
+
+
+
+
+task :default => :build
+
+directory BUILD_DIR     # make sure it exists
+directory DOWNLOAD_DIR
+
+
+task :dl => [BUILD_DIR, DOWNLOAD_DIR] do
+  ### use shell or system instead of backticks??
+
+   ## get dataset
+  `wget -O #{WORLD_ZIP_PATH} #{WORLD_DATASET_URL}`
+
+   ## get and unzip book templates
+  `wget -O #{WORLD_BOOK_ZIP_PATH} #{WORLD_BOOK_URL}`
+  `unzip #{WORLD_BOOK_ZIP_PATH} -d #{BUILD_DIR}`
+end
+
+
+desc "clean world.db build"
+task :build => [:clean,:create,:importworld] do
+  puts 'Done.'
+end
+
+task :clean do
+  rm WORLD_DB_PATH if File.exists?( WORLD_DB_PATH )
+end
+
+task :env => BUILD_DIR do
+  pp DB_CONFIG
+  ActiveRecord::Base.establish_connection( DB_CONFIG )
+
+  ## LogUtils::Logger.root.level = :info
+end
+
+desc "create world.db schema"
+task :create => :env do
+  WorldDb.create_all
+end
+
+task :importworld => :env do
+  ## WorldDb.read_setup( 'setups/test', DATA_DIR )
+  ## WorldDb.read_setup( 'setups/all', DATA_DIR )
+  
+  WorldDb.read_setup_from_zip( WORLD_ZIP_NAME, 'setups/countries', DOWNLOAD_DIR )
+end
+
+
+##################
+####################
+
+task :stats => :env do
+  puts "  contintents: #{WorldDb::Model::Continent.count}"
+end
+
+
+task :book => :env do
+  PAGES_DIR     = "#{BUILD_DIR}/world-master/_pages"
+  TEMPLATES_DIR = "#{BUILD_DIR}/world-master/_templates"
+
+  require 'hybook'   # book builder n helpers
+
+  require './build/world-master/_scripts/book'
+
+  puts "  contintents: #{WorldDb::Model::Continent.count}"
+
+  ## build book (draft version) - The Free World Fact Book - from world.db
+  build_book() # multi-page version
+  ### build_book( inline: true ) # all-in-one-page version a.k.a. inline version
+
+  puts 'Done.'
+end
+
