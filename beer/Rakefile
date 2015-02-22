@@ -14,9 +14,7 @@ $RUBYLIBS_DEBUG = true
 require 'logutils'
 require 'logutils/activerecord'
 require 'worlddb'
-
-require 'beerdb'    ## include for Datafile machinery - hack for now
-### require 'datafile'  ## check - make sure it gets add to worlddb
+require 'beerdb'
 
 
 # our own code
@@ -28,15 +26,15 @@ require 'beerdb'    ## include for Datafile machinery - hack for now
 BUILD_DIR     = "./build"
 DOWNLOAD_DIR  = "./build/dl"
 
-WORLD_BOOK_URL      = "https://github.com/book-templates/world/archive/gh-pages.zip"
-WORLD_BOOK_ZIP_PATH = "#{DOWNLOAD_DIR}/world-book.zip"
+BEER_BOOK_URL      = "https://github.com/book-templates/beer/archive/gh-pages.zip"
+BEER_BOOK_ZIP_PATH = "#{DOWNLOAD_DIR}/beer-book.zip"
 
 
-WORLD_DB_PATH = "#{BUILD_DIR}/world.db"
+BEER_DB_PATH = "#{BUILD_DIR}/beer.db"
 
 DB_CONFIG = {
   adapter:  'sqlite3',
-  database:  WORLD_DB_PATH    ## convert to absolute path ??
+  database:  BEER_DB_PATH
 }
 
 
@@ -45,12 +43,23 @@ task :default => :build
 directory BUILD_DIR     # make sure it exists
 directory DOWNLOAD_DIR
 
-DATAFILE_WORLD = <<EOS
+
+### create a DATAFILE_OPENMUNDI ???
+## create more DATAFILEs for by,cz,world,etc??
+
+###
+# todo: how to add great-beers-collection w/ quick reader ???
+
+###
+## todo/check - fetch DATAFILE from repo (do NOT duplicate here!!!!)
+
+DATAFILE_AT = <<EOS
   world  'openmundi/world.db',   setup: 'countries'
-  ### world  'openmundi/austria.db'
+  world  'openmundi/austria.db'
+  beer   'openbeer/at-austria'
 EOS
 
-builder = Datafile::Builder.load( DATAFILE_WORLD )
+builder = Datafile::Builder.load( DATAFILE_AT )
 datafile = builder.datafile
 
 
@@ -60,10 +69,10 @@ task :dl do
 end
 
 
+
 task :env => BUILD_DIR do
   pp DB_CONFIG
   ActiveRecord::Base.establish_connection( DB_CONFIG )
-
   ## LogUtils::Logger.root.level = :info
 end
 
@@ -74,42 +83,38 @@ task :build => [:clean,:create,:load] do
   puts 'Done.'
 end
 
+
 task :clean do
-  rm WORLD_DB_PATH if File.exists?( WORLD_DB_PATH )
+  rm BEER_DB_PATH if File.exists?( BEER_DB_PATH )
 end
 
-desc "create world.db schema"
+desc "create beer.db schema"
 task :create => :env do
-  WorldDb.create_all
+  BeerDb.create_all
 end
 
 task :load => :env do
-  datafile.dump   ## for debugging
+  datafile.dump  ## for debugging
   datafile.read
 end
 
-task :stats => :env do
-  puts "  contintents: #{WorldDb::Model::Continent.count}"
-end
 
-
-##################
-####################
 
 namespace :book do
   task :dl => [BUILD_DIR, DOWNLOAD_DIR] do
-    ## get and unzip book templates
-    `wget -O #{WORLD_BOOK_ZIP_PATH} #{WORLD_BOOK_URL}`
-    `unzip #{WORLD_BOOK_ZIP_PATH} -d #{BUILD_DIR}`
+    ### use shell or system instead of backticks??
+     ## get and unzip book templates
+    `wget -O #{BEER_BOOK_ZIP_PATH} #{BEER_BOOK_URL}`
+    `unzip #{BEER_BOOK_ZIP_PATH} -d #{BUILD_DIR}`
   end
 
-  task :build => :env do
-    PAGES_DIR     = "#{BUILD_DIR}/world-gh-pages/_pages"
-    TEMPLATES_DIR = "#{BUILD_DIR}/world-gh-pages/_templates"
+  task :book => :env do
+    PAGES_DIR     = "#{BUILD_DIR}/beer-gh-pages/_pages"
+    TEMPLATES_DIR = "#{BUILD_DIR}/beer-gh-pages/_templates"
 
     require 'hybook'   # book builder n helpers
 
-    require "#{BUILD_DIR}/world-gh-pages/_scripts/book"
+    require "#{BUILD_DIR}/beer-gh-pages/_scripts/book"
 
     puts "  contintents: #{WorldDb::Model::Continent.count}"
 
