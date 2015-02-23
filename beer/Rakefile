@@ -108,7 +108,7 @@ namespace :book do
     `unzip #{BEER_BOOK_ZIP_PATH} -d #{BUILD_DIR}`
   end
 
-  task :book => :env do
+  task :build => :env do
     PAGES_DIR     = "#{BUILD_DIR}/beer-gh-pages/_pages"
     TEMPLATES_DIR = "#{BUILD_DIR}/beer-gh-pages/_templates"
 
