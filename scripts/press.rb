@@ -122,5 +122,30 @@ class BookPress
     puts 'Done.'
   end
 
+  def run_jekyll
+    # change cwd folder
+    cwd = FileUtils.pwd
+    puts "cwd: #{cwd}"
+    FileUtils.cd( @config.book_templates_unzip_dir )
+    ## use `cd #{book_dir}; jekyll build`  -- why, why not???
+    puts `jekyll build`
+
+    # restore cwd folder
+    FileUtils.cd( cwd )
+  end
+
+
+
+  def run  # fix: change to build, why, why not??
+    ## all-in-one; do everything; complete all steps
+    
+    dl_datasets
+    dl_book_templates
+
+    build   ### fix: change build_database - why, why not ??
+    build_book_worker
+    run_jekyll
+  end
+
 end  # class BookPress
 

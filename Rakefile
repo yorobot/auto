@@ -22,27 +22,26 @@ SETUP = ENV['SETUP'] || ENV['DATASET'] || 'at'    ## note: default to at (austri
 puts "setting SETUP to >#{SETUP}<"
 
 
-BUILD_DIR     = "./build"
-directory BUILD_DIR
+## BUILD_DIR     = "./build"
+## directory BUILD_DIR
 
 
-task :dl => [BUILD_DIR] do
+namespace :beer do
+
   p = BookPress.create_beer_book_for( SETUP )
-  p.dl_datasets
-end
 
-task :build => [BUILD_DIR] do
-  p = BookPress.create_beer_book_for( SETUP )
-  p.build
-end
+  task :dl    do  p.dl_datasets; end
+  task :build do  p.build;       end   ## build database
 
-task :book_dl => [BUILD_DIR] do
-  p = BookPress.create_beer_book_for( SETUP )
-  p.dl_book_templates
-end
+  ## all-in-one task
+  task :run   do  p.run;         end
 
-task :book_build => [BUILD_DIR] do
-  p = BookPress.create_beer_book_for( SETUP )
-  p.build_book_worker
-end
+  namespace :book do
+    task :dl     do p.dl_book_templates; end
+    task :build  do p.build_book_worker; end
+    task :jekyll do p.run_jekyll;        end
+  end
+
+end # namespace beer
+
 
