@@ -3,3 +3,5 @@
 
 rake beer:book:dl SETUP=at
 
+rake beer:run SETUP=cz
+
