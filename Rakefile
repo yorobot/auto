@@ -6,8 +6,10 @@ require 'zip'   # use $ gem install rubyzip
 
 require 'fetcher'  ## check - fetcher already included in beerdb ??
 
-
 require 'beerdb'
+
+require 'hybook'
+
 
 require './scripts/utils'
 require './scripts/world'
@@ -47,6 +49,11 @@ end
 task :book_dl => [BUILD_DIR] do
   p = BeerPress.new( BUILD_DIR )
   p.dl_book_templates( SETUP )
+end
+
+task :book_build => [BUILD_DIR] do
+  p = BeerPress.new( BUILD_DIR )
+  p.build_book_for( SETUP )
 end
 
 

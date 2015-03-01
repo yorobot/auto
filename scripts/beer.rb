@@ -42,5 +42,39 @@ class BeerPress
     unzip( dest_zip, dest_unzip )
   end
 
+
+  def connect( setup )
+    db_path = "#{@build_dir}/beer/#{setup}/beer.db"
+
+    db_config = {
+     adapter:  'sqlite3',
+     database: db_path
+    }
+
+    pp db_config
+    ActiveRecord::Base.establish_connection( db_config )
+  end
+
+
+  def build_book_for( setup )
+    connect( setup )
+
+    ## fix: find a better way to pass along settings (do NOT use globals)
+    $pages_dir     = "#{@build_dir}/beer/#{setup}/book/_pages"
+    $templates_dir = "#{@build_dir}/beer/#{setup}/book/_templates"
+
+    ## todo/check
+    ##  fix: only include once outside of class ???
+    require "#{@build_dir}/beer/#{setup}/book/_scripts/book"
+
+    puts "  contintents: #{WorldDb::Model::Continent.count}"
+
+    ## build book (draft version) - The Free World Fact Book - from world.db
+    build_book() # multi-page version
+    ### build_book( inline: true ) # all-in-one-page version a.k.a. inline version
+
+    puts 'Done.'
+  end
+
 end  # class BeerPress
 
