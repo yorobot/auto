@@ -1,3 +1,32 @@
+# Todos
+
+- add all-in-one single page version to auto-build (use inline:true) for book.html
+- add db logger
+- add page w/ db stats
+- add page w/ error from log db
+
+
+## book templates
+
+- add world/cites book template
+- add football/clubs book template
+
+## world
+
+- generate cities booklet
+
+## beer
+
+- generate booklet for great beers with quick reader
+
+## football
+
+- generate clubs booklets
+- generate worlcup booklet
+- gneerate champions league booklet
+- generate top 4 booklet (premier league,bundesliga,la liga, italy)
+
+## misc
 
 fix:
 ~~~
