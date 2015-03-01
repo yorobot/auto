@@ -45,3 +45,21 @@ namespace :beer do
 end # namespace beer
 
 
+namespace :world do
+
+  p = BookPress.create_world_book_for( SETUP )
+
+  task :dl    do  p.dl_datasets; end
+  task :build do  p.build;       end   ## build database
+
+  ## all-in-one task
+  task :run   do  p.run;         end
+
+  namespace :book do
+    task :dl     do p.dl_book_templates; end
+    task :build  do p.build_book_worker; end
+    task :jekyll do p.run_jekyll;        end
+  end
+
+end # namespace world
+

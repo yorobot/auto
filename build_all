@@ -5,3 +5,6 @@
 rake beer:run SETUP=at
 rake beer:run SETUP=cz
 
+
+rake world:run SETUP=countries
+

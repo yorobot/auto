@@ -6,7 +6,7 @@ class BookPress
 
     def initialize( hash ) super; end
 
-    def collection() "beer"; end
+    def collection() 'beer'; end
  
     ########
     # Datafile
