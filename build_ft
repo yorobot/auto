@@ -1,16 +1,8 @@
 
-
-## rake beer:book:dl SETUP=at
-
-rake beer:run SETUP=at
-rake beer:run SETUP=cz
-
-rake world:run SETUP=countries
-
-
 rake ft:run SETUP=worldcup   ## note:  incl. worldcup 2014 plus quali
 
 ## rake ft:run SETUP=cl2014-15    -- fix: northern ireland code (nd->nir)
 
 rake ft:run SETUP=en2014-15   ## note 2014-15 season only
 rake ft:run SETUP=en
+
