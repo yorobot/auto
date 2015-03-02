@@ -1,0 +1,84 @@
+GEM
+  specs:
+    activemodel (4.1.8)
+      activesupport (= 4.1.8)
+      builder (~> 3.1)
+    activerecord (4.1.8)
+      activemodel (= 4.1.8)
+      activesupport (= 4.1.8)
+      arel (~> 5.0.0)
+    activerecord-utils (0.4.0)
+      activerecord
+      logutils
+    activesupport (4.1.8)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    arel (5.0.1.20140414130214)
+    beerdb-models (0.10.0)
+      worlddb-models (>= 2.2.0)
+    builder (3.2.2)
+    gli (2.12.2)
+    hybook (0.1.2)
+      activesupport
+      gli
+      logutils
+      markdown
+      props
+      textutils
+    i18n (0.7.0.beta1)
+    json (1.8.1)
+    kramdown (1.5.0)
+    logutils (0.6.1)
+    logutils-activerecord (0.2.0)
+      activerecord
+      logutils (>= 0.6.1)
+    markdown (1.2.0)
+      kramdown (>= 1.5.0)
+      props (>= 1.1.2)
+      textutils (>= 0.10.0)
+    minitest (5.4.3)
+    persondb-models (0.4.2)
+      worlddb-models
+    props (1.1.2)
+    props-activerecord (0.1.0)
+      activerecord
+      props (>= 1.1.2)
+    rubyzip (1.1.6)
+    sportdb-models (1.11.0)
+      persondb-models (>= 0.4.2)
+      worlddb-models (>= 2.1.0)
+    tagutils (0.3.0)
+      activerecord
+      logutils (>= 0.6.1)
+      props (>= 1.1.2)
+      textutils (>= 0.10.0)
+    textutils (1.0.1)
+      activesupport
+      logutils (>= 0.6.1)
+      props (>= 1.1.2)
+      rubyzip
+    thread_safe (0.3.4)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    worlddb-models (2.2.0)
+      activerecord
+      activerecord-utils (>= 0.2.0)
+      logutils (>= 0.6.1)
+      logutils-activerecord (>= 0.2.0)
+      props (>= 1.1.2)
+      props-activerecord (>= 0.1.0)
+      rubyzip
+      tagutils (>= 0.3.0)
+      textutils (>= 0.10.0)
+
+PLATFORMS
+  x86-mingw32
+
+DEPENDENCIES
+  beerdb-models
+  hybook
+  sportdb-models
+  worlddb-models
