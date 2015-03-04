@@ -98,6 +98,10 @@ class BookPress
 
     datafile = Datafile::Datafile.load_file( datafile_path )
     datafile.dump    ## for debugging
+
+    logger = LogUtils::Logger.root
+    logger.level = :debug
+
     datafile.read    ## datafile step 2 - read all datasets 
   end
 
