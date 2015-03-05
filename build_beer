@@ -1,0 +1,9 @@
+
+rake beer:dl SETUP=franken
+# rake beer:dl SETUP=bayern
+
+
+rake beer:build SETUP=franken
+# rake beer:build SETUP=bayern
+
+
