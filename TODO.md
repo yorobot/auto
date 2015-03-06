@@ -31,6 +31,26 @@
 fix:
 
 ~~~
+bayern:  -- key starting w/ number - what to do???? -- allow keys w/ numbers!!!! fix
+[debug] line: |»1516 Zwick'lbier« » zwickel«|
+[debug]   values: |»1516 Zwick'lbier« »zwickel«|
+[debug]    autogen key »1516zwicklbier« from title »1516 Zwick'lbier«
+[debug]   trying to find brewery in line >Meckatzer Löwenbräu, Heimenkirch<
+[info]   map_titles_for! brewery - deprecated API - use TitleMapper.map_titles! instead
+[debug]      match for brewery  >loewenbraeu< >L(ö|oe)wenbr(ä|ae)u<
+[info]   find_key_for! brewery - deprecated API - use TitleMapper.find_key! instead
+[debug]    brewery: >loewenbraeu<
+[debug]   brewery_key = >loewenbraeu<
+[debug]    found tags: >>zwickel<<
+[debug] create Beer:
+[debug] {"title":"1516 Zwick'lbier","key":"1516zwicklbier","country_id":110,"region_id":2,"txt":"de-deutschland/by-bayern!/4--schwaben/beers
+_100_000+","grade":4,"brewery_id":6,"city_id":175}
+rake aborted!
+Validation failed: Key expected two or more lowercase letters a-z or 0-9 digits
+~~~
+
+
+~~~
 at:
 [debug] enter load( name=>>at-austria!/2014-15/2-liga1<<)
 [info] parsing data in zip (event) 'at-austria!/2014-15/2-liga1' (at-austria-mas
