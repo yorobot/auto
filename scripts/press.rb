@@ -95,26 +95,30 @@ class BookPress
     @config.create_db!
 
     datafile_path = @config.datafile_path
-
+    pp datafile_path
+    
     ### hack/quick fix for at,de - "standalone quick test": todo
     ##   - find something better
-    if @config_datafile_path.end_with( 'at.rb' )
+    if datafile_path.end_with?( 'at.rb' ) ||
+       datafile_path.end_with?( '/at/Datafile' )
       ## standalone austria for debugging add country
-      WorldDb::Country.create!( key: 'at',
+      WorldDb::Model::Country.create!( key: 'at',
                                 name: 'Austria',
                                 code: 'AUT',
                                 pop: 0,
                                 area: 0 )
-    elsif @config_datafile_path.end_with( 'de.rb' )
-      WorldDb::Country.create!( key: 'de',
+    elsif datafile_path.end_with?( 'de.rb' ) ||
+          datafile_path.end_with?( '/de/Datafile' )
+      WorldDb::Model::Country.create!( key: 'de',
                                 name: 'Germany',
                                 code: 'GER',
                                 pop: 0,
                                 area: 0 )
     else
       # no special case; continue
+      puts "[debug] - no special world archive case w/ start script; continue"
     end
-    
+
 
     datafile = Datafile::Datafile.load_file( datafile_path )
     datafile.dump    ## for debugging
