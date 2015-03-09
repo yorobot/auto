@@ -1,0 +1,3 @@
+
+rake world:dl    SETUP=world
+rake world:build SETUP=world
