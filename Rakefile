@@ -28,6 +28,8 @@ puts "setting SETUP to >#{SETUP}<"
 ## directory BUILD_DIR
 
 
+
+
 namespace :beer do
 
   p = BookPress.create_beer_book_for( SETUP )
@@ -70,7 +72,7 @@ namespace :world do
 
   p = BookPress.create_world_book_for( SETUP )
 
-  task :dl    do  p.dl_datasets; end
+  task :dl    do  p.dl_datasets; end  
   task :build do  p.build;       end   ## build database
 
   ## all-in-one task

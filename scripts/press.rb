@@ -96,6 +96,26 @@ class BookPress
 
     datafile_path = @config.datafile_path
 
+    ### hack/quick fix for at,de - "standalone quick test": todo
+    ##   - find something better
+    if @config_datafile_path.end_with( 'at.rb' )
+      ## standalone austria for debugging add country
+      WorldDb::Country.create!( key: 'at',
+                                name: 'Austria',
+                                code: 'AUT',
+                                pop: 0,
+                                area: 0 )
+    elsif @config_datafile_path.end_with( 'de.rb' )
+      WorldDb::Country.create!( key: 'de',
+                                name: 'Germany',
+                                code: 'GER',
+                                pop: 0,
+                                area: 0 )
+    else
+      # no special case; continue
+    end
+    
+
     datafile = Datafile::Datafile.load_file( datafile_path )
     datafile.dump    ## for debugging
 
