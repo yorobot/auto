@@ -8,6 +8,16 @@ class BookPress
 
     def collection() 'world'; end
 
+    ############
+    # Boofile
+    # -- remote
+    def bookfile_url()
+      ## note: for now always return world.rb
+      ##   use country specific bookfiles ??   allow selection of package,how?? why,why not??
+      "http://github.com/book-templates/bookfile/raw/master/world.rb"
+    end
+
+
     ########
     # Datafile
     # -- remote
@@ -21,6 +31,8 @@ class BookPress
     ####
     # Book Templates
     # -- remote
+    #
+    #  fix: no longer used ??  - use bookfile !!!
     def book_templates_url() "http://github.com/book-templates/world/archive/gh-pages.zip"; end
     # -- local zipped
     def book_templates_zip_name()  "book-templates--I--world"; end
@@ -28,6 +40,7 @@ class BookPress
     def book_templates_zip_path()  "#{book_templates_zip_dir}/#{book_templates_zip_name}.zip"; end
     # --local unzipped
 
+    ######################
     ## rename to book_dir ?? why, why not? - split zip into book_dir and book_templates_dir why? why not?
     def book_templates_unzip_dir()  "#{build_dir}/#{collection}/#{setup}/book";  end
     ## --i/o

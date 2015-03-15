@@ -5,6 +5,11 @@ def fetch_datafile( src, dest )
   worker.copy( src, dest )
 end
 
+def fetch_bookfile( src, dest )
+  worker = Fetcher::Worker.new
+  worker.copy( src, dest )
+end
+
 
 def fetch_book_templates( src, dest )
   ## step 1 - fetch archive

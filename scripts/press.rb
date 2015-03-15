@@ -12,13 +12,19 @@ class BookPress
     end
 
     def build_dir()  @build_dir;   end
-    def setup()      @setup;       end
+    def setup()      @setup;       end   ## e.g. at, franken, worldcup, etc.
 
     ######
     # Datafile
     # -- local
     def datafile_dir()  "#{build_dir}/#{collection}/#{setup}";  end
     def datafile_path() "#{datafile_dir}/Datafile";  end
+
+    ######
+    # Bookfile    -- allow multiple (more than one) bookfiles - how? why, why not???
+    # -- local
+    def bookfile_dir()  "#{build_dir}/#{collection}/#{setup}";  end
+    def bookfile_path() "#{datafile_dir}/Bookfile";  end
   end
 
 
@@ -48,18 +54,32 @@ class BookPress
 
 
   def dl_book_templates
-    ## note: lets use http:// instead of https:// for now - lets us use person proxy (NOT working w/ https for now)
-    src      = @config.book_templates_url
-    dest_zip = @config.book_templates_zip_path
-    
-    fetch_book_templates( src, dest_zip )
-
-    dest_unzip = @config.book_templates_unzip_dir
+    ## fetch Bookfile
+    bookfile_dir  = @config.bookfile_dir
+    bookfile_path = @config.bookfile_path
 
     ## check if folders exists? if not create folder in path
+    FileUtils.mkdir_p( bookfile_dir )  unless Dir.exists?( bookfile_dir )
+
+    ## note: lets use http:// instead of https:// for now - lets us use person proxy (NOT working w/ https for now)
+    src = @config.bookfile_url
+    ## dest will be something like './Bookfile'
+
+    fetch_bookfile( src, bookfile_path )
+
+###  fix: add convenience Bookfile.load_file to bookfile gem
+###    bookfile = Bookfile::Bookfile.load_file( bookfile_path )
+    builder = Bookfile::Builder.load_file( bookfile_path )
+    bookfile = builder.bookfile
+
+    bookfile.dump        ## for debugging
+    bookfile.download    ## bookfile step 1 - download all packages/zips (defaults to ./tmp) 
+    
+    ## todo/check: already checked in unzip if folder exists???
+    dest_unzip = @config.book_templates_unzip_dir
     FileUtils.mkdir_p( dest_unzip )  unless Dir.exists?( dest_unzip )
 
-    unzip( dest_zip, dest_unzip )
+    bookfile.unzip( dest_unzip )   ## bookfile step 2 - unzip book templates 
   end
 
 
@@ -135,20 +155,33 @@ class BookPress
 
     ## fix: find a better way to pass along settings (do NOT use globals)
     $pages_dir     = "#{@config.book_templates_unzip_dir}/_pages"
-    $templates_dir = "#{@config.book_templates_unzip_dir}/_templates"
 
-    ## todo/check
-    ##  fix: only include once outside of class ???
-    require "#{@config.book_templates_unzip_dir}/_scripts/book"
 
-    puts "  contintents: #{WorldDb::Model::Continent.count}"
+    bookfile_path = @config.bookfile_path
+
+###  fix: add convenience Bookfile.load_file to bookfile gem
+###    bookfile = Bookfile::Bookfile.load_file( bookfile_path )
+    builder = Bookfile::Builder.load_file( bookfile_path )
+    bookfile = builder.bookfile
+
+    bookfile.dump        ## for debugging
+
+    ### fix:
+    ###     assume WorldDb::Models already included ??
+    ## - for now always include on prepare
+    bookfile.prepare( @config.book_templates_unzip_dir )
+
+    puts "  contintents: #{WorldDb::Model::Continent.count}"   ## for debugging
+
+    bookfile.build( @config.book_templates_unzip_dir )
 
     ## build book (draft version) - The Free World Fact Book - from world.db
-    build_book() # multi-page version
+    ## build_book() # multi-page version
     ### build_book( inline: true ) # all-in-one-page version a.k.a. inline version
 
     puts 'Done.'
   end
+
 
   def run_jekyll
     # change cwd folder
@@ -174,6 +207,43 @@ class BookPress
     build_book_worker
     run_jekyll
   end
+
+
+  def old_dl_book_templates_remove
+    ## note: lets use http:// instead of https:// for now - lets us use person proxy (NOT working w/ https for now)
+    src      = @config.book_templates_url
+    dest_zip = @config.book_templates_zip_path
+    
+    fetch_book_templates( src, dest_zip )
+
+    dest_unzip = @config.book_templates_unzip_dir
+
+    ## check if folders exists? if not create folder in path
+    FileUtils.mkdir_p( dest_unzip )  unless Dir.exists?( dest_unzip )
+
+    unzip( dest_zip, dest_unzip )
+  end
+
+  def old_build_book_worker_remove
+    connect()
+
+    ## fix: find a better way to pass along settings (do NOT use globals)
+    $pages_dir     = "#{@config.book_templates_unzip_dir}/_pages"
+    $templates_dir = "#{@config.book_templates_unzip_dir}/_templates"
+
+    ## todo/check
+    ##  fix: only include once outside of class ???
+    require "#{@config.book_templates_unzip_dir}/_scripts/book"
+
+    puts "  contintents: #{WorldDb::Model::Continent.count}"
+
+    ## build book (draft version) - The Free World Fact Book - from world.db
+    build_book() # multi-page version
+    ### build_book( inline: true ) # all-in-one-page version a.k.a. inline version
+
+    puts 'Done.'
+  end
+
 
 end  # class BookPress
 

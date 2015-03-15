@@ -9,7 +9,11 @@ require 'fetcher'  ## check - fetcher already included in beerdb ??
 require 'beerdb'    ## check - just include beerdb/models  - why, why not??
 require 'sportdb'   ## check - just include sportdb/models - why, why not??
 
+##  include models at top-level (globals) - why, why not????
+## include WorldDb::Models
+
 require 'hybook'
+require 'bookfile'
 
 
 require './scripts/utils'
