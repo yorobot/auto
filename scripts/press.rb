@@ -67,10 +67,8 @@ class BookPress
 
     fetch_bookfile( src, bookfile_path )
 
-###  fix: add convenience Bookfile.load_file to bookfile gem
-###    bookfile = Bookfile::Bookfile.load_file( bookfile_path )
-    builder = Bookfile::Builder.load_file( bookfile_path )
-    bookfile = builder.bookfile
+
+    bookfile = Bookfile::Bookfile.load_file( bookfile_path )
 
     bookfile.dump        ## for debugging
     bookfile.download    ## bookfile step 1 - download all packages/zips (defaults to ./tmp) 

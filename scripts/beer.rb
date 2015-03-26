@@ -7,7 +7,17 @@ class BookPress
     def initialize( hash ) super; end
 
     def collection() 'beer'; end
- 
+
+    ############
+    # Boofile
+    # -- remote
+    def bookfile_url()
+      ## note: for now always return beer.rb
+      ##   use setup/layout-specific bookfiles??   allow selection of package,how?? why,why not??
+      "http://github.com/book-templates/bookfile/raw/master/beer.rb"
+    end
+
+
     ########
     # Datafile
     # -- remote
