@@ -1,37 +1,12 @@
 
+module BookPress
 
 class BookPress
-
-  class Config
-
-    def initialize( hash )
-      @hash = hash
-
-      @build_dir  = hash[:build_dir] || './build'  ## note: defaults to ./build
-      @setup      = hash[:setup]
-    end
-
-    def build_dir()  @build_dir;   end
-    def setup()      @setup;       end   ## e.g. at, franken, worldcup, etc.
-
-    ######
-    # Datafile
-    # -- local
-    def datafile_dir()  "#{build_dir}/#{collection}/#{setup}";  end
-    def datafile_path() "#{datafile_dir}/Datafile";  end
-
-    ######
-    # Bookfile    -- allow multiple (more than one) bookfiles - how? why, why not???
-    # -- local
-    def bookfile_dir()  "#{build_dir}/#{collection}/#{setup}";  end
-    def bookfile_path() "#{datafile_dir}/Bookfile";  end
-  end
-
-
 
   def initialize( config )
     @config = config
   end
+
 
   def dl_datasets
     ## fetch Datafile
@@ -103,7 +78,7 @@ class BookPress
   end
 
 
-  def build
+  def build_db
     ## clean; remove db if exits
 
     db_path = @config.db_path
@@ -114,7 +89,8 @@ class BookPress
 
     datafile_path = @config.datafile_path
     pp datafile_path
-    
+
+
     ### hack/quick fix for at,de - "standalone quick test": todo
     ##   - find something better
     if datafile_path.end_with?( 'at.rb' ) ||
@@ -148,20 +124,12 @@ class BookPress
   end
 
 
-  def build_book_worker
+  def build_book
     connect()
-
-    ## fix: find a better way to pass along settings (do NOT use globals)
-    $pages_dir     = "#{@config.book_templates_unzip_dir}/_pages"
-
 
     bookfile_path = @config.bookfile_path
 
-###  fix: add convenience Bookfile.load_file to bookfile gem
-###    bookfile = Bookfile::Bookfile.load_file( bookfile_path )
-    builder = Bookfile::Builder.load_file( bookfile_path )
-    bookfile = builder.bookfile
-
+    bookfile = Bookfile::Bookfile.load_file( bookfile_path )
     bookfile.dump        ## for debugging
 
     ### fix:
@@ -172,10 +140,6 @@ class BookPress
     puts "  contintents: #{WorldDb::Model::Continent.count}"   ## for debugging
 
     bookfile.build( @config.book_templates_unzip_dir )
-
-    ## build book (draft version) - The Free World Fact Book - from world.db
-    ## build_book() # multi-page version
-    ### build_book( inline: true ) # all-in-one-page version a.k.a. inline version
 
     puts 'Done.'
   end
@@ -194,54 +158,29 @@ class BookPress
   end
 
 
-
-  def run  # fix: change to build, why, why not??
+  def build
     ## all-in-one; do everything; complete all steps
-    
     dl_datasets
     dl_book_templates
 
-    build   ### fix: change build_database - why, why not ??
-    build_book_worker
+    build_db
+    build_book
     run_jekyll
   end
 
 
-  def old_dl_book_templates_remove
-    ## note: lets use http:// instead of https:// for now - lets us use person proxy (NOT working w/ https for now)
-    src      = @config.book_templates_url
-    dest_zip = @config.book_templates_zip_path
-    
-    fetch_book_templates( src, dest_zip )
+private
 
-    dest_unzip = @config.book_templates_unzip_dir
-
-    ## check if folders exists? if not create folder in path
-    FileUtils.mkdir_p( dest_unzip )  unless Dir.exists?( dest_unzip )
-
-    unzip( dest_zip, dest_unzip )
+  def fetch_datafile( src, dest )
+    worker = Fetcher::Worker.new
+    worker.copy( src, dest )
   end
 
-  def old_build_book_worker_remove
-    connect()
-
-    ## fix: find a better way to pass along settings (do NOT use globals)
-    $pages_dir     = "#{@config.book_templates_unzip_dir}/_pages"
-    $templates_dir = "#{@config.book_templates_unzip_dir}/_templates"
-
-    ## todo/check
-    ##  fix: only include once outside of class ???
-    require "#{@config.book_templates_unzip_dir}/_scripts/book"
-
-    puts "  contintents: #{WorldDb::Model::Continent.count}"
-
-    ## build book (draft version) - The Free World Fact Book - from world.db
-    build_book() # multi-page version
-    ### build_book( inline: true ) # all-in-one-page version a.k.a. inline version
-
-    puts 'Done.'
+  def fetch_bookfile( src, dest )
+    worker = Fetcher::Worker.new
+    worker.copy( src, dest )
   end
-
 
 end  # class BookPress
 
+end # module BookPress
