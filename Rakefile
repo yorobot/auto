@@ -36,7 +36,7 @@ puts "setting SETUP to >#{SETUP}<"
 
 namespace :beer do
 
-  p = BookPress.create_beer_book_for( SETUP )
+  p = BookPress::BookPress.create_beer_book_for( SETUP )
 
   ## all-in-one task
   task :build  do  p.build;         end
@@ -57,7 +57,7 @@ end # namespace beer
 
 namespace :ft do
 
-  p = BookPress.create_football_book_for( SETUP )
+  p = BookPress::BookPress.create_football_book_for( SETUP )
 
   ## all-in-one task
   task :build   do  p.build;         end
@@ -78,7 +78,7 @@ end # namespace ft
 
 namespace :world do
 
-  p = BookPress.create_world_book_for( SETUP )
+  p = BookPress::BookPress.create_world_book_for( SETUP )
 
   ## all-in-one task
   task :build   do  p.build;      end
