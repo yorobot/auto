@@ -12,13 +12,13 @@ module BookPress
     def bookfile_url()
       ## note: for now always return world.rb
       ##   use country specific bookfiles ??   allow selection of package,how?? why,why not??
-      "http://github.com/book-templates/bookfile/raw/master/world.rb"
+      "https://github.com/book-templates/bookfile/raw/master/world.rb"
     end
 
     ########
     # Datafile
     # -- remote
-    def datafile_url() "http://github.com/openmundi/datafile/raw/master/#{setup}.rb"; end
+    def datafile_url() "https://github.com/openmundi/datafile/raw/master/#{setup}.rb"; end
 
     #######
     # Database

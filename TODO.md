@@ -1,7 +1,7 @@
 # Todos
 
 - add all-in-one single page version to auto-build (use inline:true) for book.html
-- add db logger
+- [] add db logger  !!!! - see "classic" build scripts
 - add page w/ db stats
 - add page w/ error from log db
 

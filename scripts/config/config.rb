@@ -6,6 +6,8 @@ module BookPress
     def initialize( hash )
       @hash = hash
 
+### add source_url  e.g. https://github.com ?? - why, why not???
+
       @build_dir  = hash[:build_dir] || './build'  ## note: defaults to ./build
       @setup      = hash[:setup]
     end
