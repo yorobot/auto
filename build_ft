@@ -1,8 +1,27 @@
 
 rake ft:run SETUP=worldcup   ## note:  incl. worldcup 2014 plus quali
+rake ft:run SETUP=worldcup2014
 
-## rake ft:run SETUP=cl2014-15    -- fix: northern ireland code (nd->nir)
+rake ft:run SETUP=top
+rake ft:run SETUP=top2014-15
+
+rake ft:run SETUP=cl2014-15    ## -- fix: northern ireland code (nd->nir) ??
 
 rake ft:run SETUP=en2014-15   ## note 2014-15 season only
 rake ft:run SETUP=en
+
+rake ft:run SETUP=de2014-15
+rake ft:run SETUP=de
+
+rake ft:run SETUP=es2014-15
+rake ft:run SETUP=es
+
+rake ft:run SETUP=it2014-15
+rake ft:run SETUP=it
+
+rake ft:run SETUP=fr2014-15
+rake ft:run SETUP=fr
+
+rake ft:run SETUP=at2014-15
+rake ft:run SETUP=at
 

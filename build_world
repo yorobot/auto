@@ -2,7 +2,9 @@
 rake world:db:dl      SETUP=world
 rake world:db:build   SETUP=world
 
-rake world:book:dl    SETUP=world
-rake world:book:build SETUP=world
+rake world:book:dl     SETUP=world
+rake world:book:build  SETUP=world
+rake world:book:jekyll SETUP=world
 
 # rake world:build      SETUP=world
+

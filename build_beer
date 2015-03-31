@@ -1,9 +1,22 @@
 
-rake beer:dl SETUP=franken
+# rake beer:run SETUP=at
+# rake beer:run SETUP=cz
+# rake beer:run SETUP=be
+
+# rake beer:run SETUP=europe
+
+
+
+# rake beer:dl SETUP=franken
+# rake beer:build SETUP=franken
+# rake beer:book:dl SETUP=franken
+# rake beer:book:build SETUP=franken
+# rake beer:book:jekyll SETUP=franken
+
+# rake beer:run SETUP=franken
+
+
 # rake beer:dl SETUP=bayern
-
-
-rake beer:build SETUP=franken
 # rake beer:build SETUP=bayern
 
 
