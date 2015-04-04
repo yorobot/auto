@@ -10,8 +10,8 @@ require 'sportdb'   ## check - just include sportdb/models - why, why not??
 ##  include models at top-level (globals) - why, why not????
 ## include WorldDb::Models
 
-require 'hybook'
 require 'bookfile'
+require 'bookman'
 
 
 
@@ -20,27 +20,23 @@ SETUP = ENV['SETUP'] || ENV['DATASET'] || 'at'    ## note: default to at (austri
 puts "setting SETUP to >#{SETUP}<"
 
 
-## BUILD_DIR     = "./build"
-## directory BUILD_DIR
-
-
 
 namespace :beer do
 
-  p = Hybook::BookPress.create_beer_book_for( SETUP )
+  b = Bookman::Bookman.create_beer_book_for( SETUP )
 
   ## all-in-one task
-  task :build  do  p.build;         end
+  task :build  do  b.build;         end
 
   namespace :db do
-    task :dl    do  p.dl_datasets; end
-    task :build do  p.build_db;    end
+    task :dl    do  b.dl_datasets; end
+    task :build do  b.build_db;    end
   end
 
   namespace :book do
-    task :dl     do p.dl_book_templates; end
-    task :build  do p.build_book;        end
-    task :jekyll do p.run_jekyll;        end
+    task :dl     do b.dl_book_templates; end
+    task :build  do b.build_book;        end
+    task :jekyll do b.run_jekyll;        end
   end
 
 end # namespace beer
@@ -48,20 +44,20 @@ end # namespace beer
 
 namespace :ft do
 
-  p = Hybook::BookPress.create_football_book_for( SETUP )
+  b = Bookman::Bookman.create_football_book_for( SETUP )
 
   ## all-in-one task
-  task :build   do  p.build;         end
+  task :build   do  b.build;         end
 
   namespace :db do
-    task :dl    do  p.dl_datasets; end
-    task :build do  p.build_db;    end
+    task :dl    do  b.dl_datasets; end
+    task :build do  b.build_db;    end
   end
 
   namespace :book do
-    task :dl     do p.dl_book_templates; end
-    task :build  do p.build_book;        end
-    task :jekyll do p.run_jekyll;        end
+    task :dl     do b.dl_book_templates; end
+    task :build  do b.build_book;        end
+    task :jekyll do b.run_jekyll;        end
   end
 
 end # namespace ft
@@ -69,20 +65,20 @@ end # namespace ft
 
 namespace :world do
 
-  p = Hybook::BookPress.create_world_book_for( SETUP )
+  b = Bookman::Bookman.create_world_book_for( SETUP )
 
   ## all-in-one task
-  task :build   do  p.build;      end
+  task :build   do  b.build;      end
 
   namespace :db do
-    task :dl    do  p.dl_datasets;    end
-    task :build do  p.build_db;       end
+    task :dl    do  b.dl_datasets;    end
+    task :build do  b.build_db;       end
   end
 
   namespace :book do
-    task :dl     do p.dl_book_templates; end
-    task :build  do p.build_book;        end
-    task :jekyll do p.run_jekyll;        end
+    task :dl     do b.dl_book_templates; end
+    task :build  do b.build_book;        end
+    task :jekyll do b.run_jekyll;        end
   end
 
 end # namespace world

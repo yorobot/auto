@@ -1,5 +1,6 @@
 
-# rake beer:run SETUP=at
+rake beer:build SETUP=at
+
 # rake beer:run SETUP=cz
 # rake beer:run SETUP=be
 
