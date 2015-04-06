@@ -1,4 +1,0 @@
-
-rake ft:dl    SETUP=fr2014-15
-rake ft:build SETUP=fr2014-15
-
