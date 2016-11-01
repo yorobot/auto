@@ -86,3 +86,70 @@ Tasks: TOP => ft:run
 (See full trace by running task with --trace)
 ~~~
 
+
+
+# todos from beer.db
+
+fix be(lgium):  # in auto-title not escaped
+
+~~~
+[debug] {"title":"Petrus Blond","key":"petrusblond","country_id":108,"region_id":6,"txt":"be-belgium!/2--vwv-west-vlaanderen--flanders/beers","grade":4}
+[debug] line: |»Petrus Winter #9« »     9%« » winter|ale«|
+[debug]   values: |»Petrus Winter #9« »9%« »winter|ale«|
+[debug]    autogen key »petruswinter#9« from title »Petrus Winter #9«
+[debug]   trying to find brewery in line >Brouwerij Bavik, Bavikhove<
+[info]   map_titles_for! brewery - deprecated API - use TitleMapper.map_titles! instead
+[info]   find_key_for! brewery - deprecated API - use TitleMapper.find_key! instead
+[debug]   brewery_key = ><
+[debug]    found tags: >>winter|ale<<
+[debug] create Beer:
+[debug] {"title":"Petrus Winter #9","key":"petruswinter#9","country_id":108,"region_id":6,"txt":"be-belgium!/2--vwv-west-vlaanderen--flanders/beers","grade":4,"abv":9.0}
+rake aborted!
+ActiveRecord::RecordInvalid: Validation failed: Key expected two or more lowercase letters a-z or 0-9 digits
+~~~
+
+## add all repos to all datafile
+
+~~~
+
+
+task :world => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', WORLD_INCLUDE_PATH )
+end
+
+task :ch => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', CH_INCLUDE_PATH )
+end
+
+task :cz => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', CZ_INCLUDE_PATH )
+end
+
+task :ie => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', IE_INCLUDE_PATH )
+end
+
+task :be => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', BE_INCLUDE_PATH )
+end
+
+task :nl => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', NL_INCLUDE_PATH )
+end
+
+task :ca => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', CA_INCLUDE_PATH )
+end
+
+task :us => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', US_INCLUDE_PATH )
+end
+
+task :mx => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', MX_INCLUDE_PATH )
+end
+
+task :jp => :importbuiltin do
+  BeerDb.read_setup( 'setups/all', JP_INCLUDE_PATH )
+end
+~~~
