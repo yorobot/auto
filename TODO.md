@@ -153,3 +153,46 @@ task :jp => :importbuiltin do
   BeerDb.read_setup( 'setups/all', JP_INCLUDE_PATH )
 end
 ~~~
+
+
+# todos from football.db
+
+fix austria ??
+
+~~~
+[info] parsing data in zip (event) 'at-austria!/2014-15/2-liga1' (at-austria-master/2014-15/2-liga1.yml)...
+[debug] yaml key:String >>league<<, value:String >>at.2<<
+[debug] yaml key:String >>season<<, value:String >>2014/15<<
+[debug] yaml key:String >>start_at<<, value:Date >>2014-07-18<<
+[debug] yaml key:String >>teams<<, value:Array >>["innsbruck", "alustenau", "liefering", "stpoelten", "ksv", "mattersburg", "horn", "hartberg", "fac", "lask"]<<
+[debug] find event - league_id: 48, season_id: 7
+[debug] *** create event:
+[debug] {"sources":"2-liga1.yml","config":"2-liga1.yml","league_id":48,"season_id":7,"start_at":"2014-07-18","team_ids":[1029,1032,1038,1033,1036,1030,1035,1037,1039,1040]}
+[info] parsing data in zip (fixture) 'at-austria!/2014-15/2-liga1' (at-austria-master/2014-15/2-liga1.yml)...
+[debug] yaml key:String >>league<<, value:String >>at.2<<
+[debug] yaml key:String >>season<<, value:String >>2014/15<<
+[debug] yaml key:String >>start_at<<, value:Date >>2014-07-18<<
+[debug] yaml key:String >>teams<<, value:Array >>["innsbruck", "alustenau", "liefering", "stpoelten", "ksv", "mattersburg", "horn", "hartberg", "fac", "lask"]<<
+[debug] find event - league_id: 48, season_id: 7
+[debug] *** update event 38-at.2.2014/15:
+[debug] {"sources":"2-liga1.yml","config":"2-liga1.yml","league_id":48,"season_id":7,"start_at":"2014-07-18","team_ids":[1029,1032,1038,1033,1036,1030,1035,1037,1039,1040]}
+rake aborted!
+NoMethodError: undefined method `get_input_stream' for nil:NilClass
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/readers/game.rb:52:in `block in from_zip'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/readers/game.rb:49:in `each'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/readers/game.rb:49:in `from_zip'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/reader_zip.rb:125:in `create_game_reader'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/reader.rb:120:in `load'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/reader.rb:20:in `block in load_setup'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/textutils-1.2.0/lib/textutils/reader/fixture_reader.rb:121:in `block in each'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/textutils-1.2.0/lib/textutils/reader/fixture_reader.rb:120:in `each'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/textutils-1.2.0/lib/textutils/reader/fixture_reader.rb:120:in `each'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/reader.rb:19:in `load_setup'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/sportdb-models-1.10.1/lib/sportdb/models.rb:146:in `read_setup_from_zip'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/datafile-0.1.2/lib/datafile/datasets/football.rb:14:in `read'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/datafile-0.1.2/lib/datafile/datafile.rb:89:in `block in read'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/datafile-0.1.2/lib/datafile/datafile.rb:88:in `each'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/datafile-0.1.2/lib/datafile/datafile.rb:88:in `read'
+/home/gerald/.rvm/gems/ruby-2.1.4/gems/bookman-0.1.0/lib/bookman/bookman.rb:143:in `build_db'
+/home/gerald/github/openfootball/auto/Rakefile:27:in `block (2 levels) in <top (required)>'
+~~~
