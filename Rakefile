@@ -19,6 +19,8 @@ require 'bookman'
 SETUP = ENV['SETUP'] || ENV['DATASET'] || 'at'    ## note: default to at (austria) for now
 puts "setting SETUP to >#{SETUP}<"
 
+### what keys to use? any more e.g. DATA=?, KEY=? ??
+####  fix/todo: use for world --> 'countries'    ## note: default to countries for now
 
 
 namespace :beer do
