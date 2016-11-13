@@ -263,3 +263,8 @@ Use it as you please with no restrictions whatsoever.
 Send them along to the
 [Open Sports & Friends Forum/Mailing List](http://groups.google.com/group/opensport).
 Thanks!
+
+
+# World.db README
+
+note: use countries for default dataset e.g. `rake world:build SETUP=countries`
